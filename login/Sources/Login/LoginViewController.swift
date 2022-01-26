@@ -9,22 +9,24 @@ import UIKit
 
 final class LoginviewControlle : UIViewController {
     
-    private var customView: LoginView? = nil
-    private var customViewSing: SingInView? = nil
+    private var loginView: LoginView? = nil
+    private var singInView: SingInView? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buildView(viewNumber: 0)
+        buildView()
     }
     
-    private func buildView(viewNumber:Int){
-        
+    @objc private func buildView(){
+        view = LoginView()
+        loginView = view as? LoginView
+        loginView?.buttonSingIn.addTarget(self, action: #selector(singInClick), for:UIControl.Event.touchUpInside)
+    }
     
-//        view = LoginView()
-//        customView = view as? LoginView
-        
+    @objc private func singInClick (sender : UIButton!){
         view = SingInView()
-        customViewSing = view as? SingInView
+        singInView = view as? SingInView
+        singInView?.buttonReturn.addTarget(self, action:#selector(buildView), for: UIControl.Event.touchUpInside)
     }
 }
 

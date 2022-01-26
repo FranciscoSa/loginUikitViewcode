@@ -7,7 +7,11 @@
 
 import UIKit
 
-class LoginView : UIView{
+protocol onclick {
+    var onclikSingIn: Bool {get}
+}
+
+class LoginView :UIView{
     
     private lazy var backgroundLogin: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -35,7 +39,7 @@ class LoginView : UIView{
         return label
     }()
     
-    private lazy var buttonSingIn: UIButton = {
+    lazy var buttonSingIn: UIButton = {
         var config = UIButton.Configuration.filled()
         config.title = "Sign In"
         config.baseBackgroundColor = UIColor(red: 0.08, green: 0.05, blue: 0.26 , alpha: 1.00)
@@ -58,7 +62,6 @@ class LoginView : UIView{
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
     
     init (){
         super.init(frame: .zero)

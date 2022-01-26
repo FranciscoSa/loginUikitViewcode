@@ -21,6 +21,7 @@ class SingInView: UIView {
         constrainButtonLoginGoogle()
         constrainLabelSingUp()
         constrainButtonSingUp()
+        constrainButtonReturn()
     }
     
     required init?(coder: NSCoder) {
@@ -117,6 +118,15 @@ class SingInView: UIView {
         return button
     }()
     
+    public lazy var buttonReturn: UIButton = {
+        let button = UIButton()
+        button.setTitle("Back", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private func addSubView() {
         addSubview(background)
         addSubview(textFieldEmail)
@@ -127,6 +137,7 @@ class SingInView: UIView {
         addSubview(buttonLoginGoogle)
         addSubview(labelSingUp)
         addSubview(buttonSingUp)
+        addSubview(buttonReturn)
     }
     
     private func constrainBackgound(){
@@ -235,6 +246,17 @@ class SingInView: UIView {
         let constrain = [
             buttonSingUp.topAnchor.constraint(equalTo: buttonLoginGoogle.bottomAnchor, constant: 3),
             buttonSingUp.trailingAnchor.constraint(equalTo: buttonLoginGoogle.trailingAnchor, constant: -7),
+        ]
+        
+        constrain.forEach{(item) in
+            item.isActive = true
+        }
+    }
+    
+    private func constrainButtonReturn(){
+        let constrain = [
+            buttonReturn.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            buttonReturn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
         ]
         
         constrain.forEach{(item) in
