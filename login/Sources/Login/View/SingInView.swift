@@ -6,8 +6,12 @@
 //
 
 import UIKit
-
+protocol SingInViewProtocol{
+    func didSingInClick()
+}
 class SingInView: UIView {
+    
+    var delegate: SingInViewProtocol?
     
     init (){
         super.init(frame: .zero)
@@ -21,7 +25,6 @@ class SingInView: UIView {
         constrainButtonLoginGoogle()
         constrainLabelSingUp()
         constrainButtonSingUp()
-        constrainButtonReturn()
     }
     
     required init?(coder: NSCoder) {
@@ -63,6 +66,7 @@ class SingInView: UIView {
         config.cornerStyle = .capsule
         config.baseForegroundColor = UIColor.white
         let button = UIButton(configuration: config, primaryAction: nil)
+        button.addTarget(self, action: #selector(clickSingInButton), for: UIControl.Event.touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints  = false
         return button
     }()
@@ -118,15 +122,6 @@ class SingInView: UIView {
         return button
     }()
     
-    public lazy var buttonReturn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Back", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     private func addSubView() {
         addSubview(background)
         addSubview(textFieldEmail)
@@ -137,7 +132,6 @@ class SingInView: UIView {
         addSubview(buttonLoginGoogle)
         addSubview(labelSingUp)
         addSubview(buttonSingUp)
-        addSubview(buttonReturn)
     }
     
     private func constrainBackgound(){
@@ -253,14 +247,7 @@ class SingInView: UIView {
         }
     }
     
-    private func constrainButtonReturn(){
-        let constrain = [
-            buttonReturn.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            buttonReturn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-        ]
-        
-        constrain.forEach{(item) in
-            item.isActive = true
-        }
+    @objc private func clickSingInButton() {
+        delegate?.didSingInClick()
     }
 }

@@ -7,11 +7,15 @@
 
 import UIKit
 
-protocol onclick {
-    var onclikSingIn: Bool {get}
+protocol LoginViewProtocol {
+    func didSingInClick()
+    func didSingUpClick()
 }
 
-class LoginView :UIView{
+
+class LoginView: UIView {
+    
+    var delegate: LoginViewProtocol?
     
     private lazy var backgroundLogin: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -39,14 +43,14 @@ class LoginView :UIView{
         return label
     }()
     
-    lazy var buttonSingIn: UIButton = {
+    private lazy var buttonSingIn: UIButton = {
         var config = UIButton.Configuration.filled()
         config.title = "Sign In"
         config.baseBackgroundColor = UIColor(red: 0.08, green: 0.05, blue: 0.26 , alpha: 1.00)
         config.cornerStyle = .capsule
-        //config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
         config.baseForegroundColor = UIColor.white
         let button = UIButton(configuration: config, primaryAction: nil)
+        button.addTarget(self, action: #selector(clickSingInButton), for: UIControl.Event.touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints  = false
         return button
     }()
@@ -56,12 +60,13 @@ class LoginView :UIView{
         config.title = "Sign Up"
         config.baseBackgroundColor = .white
         config.cornerStyle = .capsule
-        //config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
         config.baseForegroundColor = UIColor(red: 0.08, green: 0.05, blue: 0.26 , alpha: 1.00)
         let button = UIButton(configuration: config, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(clickSingUpButton), for: UIControl.Event.touchUpInside)
         return button
     }()
+
     
     init (){
         super.init(frame: .zero)
@@ -144,5 +149,13 @@ class LoginView :UIView{
         constraint.forEach{ (item) in
             item.isActive = true
         }
+    }
+    
+    @objc private func clickSingInButton() {
+        delegate?.didSingInClick()
+    }
+    
+    @objc private func clickSingUpButton() {
+        delegate?.didSingUpClick()
     }
 }
