@@ -25,10 +25,17 @@ final class LoginViewControlle: UIViewController, LoginViewProtocol{
     override func loadView() {
         myView.delegate = self
         view = myView
+        //view = loaddteste()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    func loaddteste () -> UIView?{
+        let bundle = Bundle(for: type(of:self))
+        let nib = UINib(nibName: "teste", bundle: bundle)
+        return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
 }
